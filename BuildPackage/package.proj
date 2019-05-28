@@ -3,13 +3,11 @@
 
 	<!-- IMPORTS -->
 	<PropertyGroup>
-		<MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\Tools\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
 		<MSBuildUmbracoTasksPath>$(MSBuildProjectDirectory)\Tools\MSBuildUmbracoTasks</MSBuildUmbracoTasksPath>
 		<MSBuildNugetTasksPath>$(MSBuildProjectDirectory)\Tools\MSBuildNugetTasks</MSBuildNugetTasksPath>
 		<AppVeyorUmbracoPath>$(MSBuildProjectDirectory)\Tools\AppVeyorUmbraco</AppVeyorUmbracoPath>
 	</PropertyGroup>
 
-  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
 	<Import Project="$(MSBuildUmbracoTasksPath)\MSBuild.Umbraco.Tasks.Targets" />
 	<Import Project="$(MSBuildNugetTasksPath)\MSBuild.NuGet.Tasks.Targets" />
 	<Import Project="$(AppVeyorUmbracoPath)\AppVeyorUmbraco.Targets" />
@@ -66,15 +64,11 @@
         <AbortBuild>false</AbortBuild>
       </PropertyGroup>
     </Otherwise>
-  </Choose>
-
- 
+  </Choose> 
 
   <!-- PATHS -->
   <PropertyGroup>
-    <BuildConfig>Release</BuildConfig>
     <RootDir>$(MSBuildProjectDirectory)\..</RootDir>
-    <CoreProjectDir>$(RootDir)\Pure</CoreProjectDir>
     <BuildUmbDir>$(MSBuildProjectDirectory)\_umbraco</BuildUmbDir>
     <BuildNuGetDir>$(MSBuildProjectDirectory)\_nuget</BuildNuGetDir>
     <ArtifactsDir>$(MSBuildProjectDirectory)\artifacts</ArtifactsDir>
@@ -99,32 +93,15 @@
     <MakeDir Directories="$(ArtifactsDir)" />
   </Target>
 
-    <!-- UPDATE PROJECT ASSEMBLEY VERSION -->
-  <Target Name="UpdateAssemblyInfo" DependsOnTargets="Clean">
-    <FileUpdate Encoding="ASCII" Files="$(CoreProjectDir)\Properties\AssemblyInfo.cs" Regex="AssemblyVersion\(&quot;.*&quot;\)\]" ReplacementText="AssemblyVersion(&quot;$(FileVersion)&quot;)]" />
-    <FileUpdate Encoding="ASCII" Files="$(CoreProjectDir)\Properties\AssemblyInfo.cs" Regex="AssemblyFileVersion\(&quot;.*&quot;\)\]" ReplacementText="AssemblyFileVersion(&quot;$(FileVersion)&quot;)]" />
-    <FileUpdate Encoding="ASCII" Files="$(CoreProjectDir)\Properties\AssemblyInfo.cs" Regex="AssemblyInformationalVersion\(&quot;.*&quot;\)\]" ReplacementText="AssemblyInformationalVersion(&quot;$(ProductVersion)&quot;)]" />
-  </Target>
-
-	<!-- COMPILE -->
-	<Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
-		<MSBuild Projects="$(CoreProjectDir)\Pure.csproj" Properties="Configuration=$(BuildConfig)"/>
-	</Target>
-
 	<!-- PREPARE FILES -->
-	<Target Name="PrepareFiles" DependsOnTargets="Compile">
+	<Target Name="PrepareFiles" DependsOnTargets="Clean">
 		<ItemGroup>
-			<BinFiles Include="$(CoreProjectDir)\Bin\$(BuildConfig)\Pure.dll" />
-			<PdbFiles Include="$(CoreProjectDir)\Bin\$(BuildConfig)\Pure.pdb" />
-			<SrcFiles Include="$(CoreProjectDir)\**\*.cs" Exclude="$(CoreProjectDir)\obj\**"/>
 			<PackageFile Include="$(MSBuildProjectDirectory)\package.xml" />
 			<NuSpecFile Include="$(MSBuildProjectDirectory)\package.nuspec" />
 			<GruntProjectFiles Include="$(GruntProjectDir)\**\*" />
 		</ItemGroup>
-		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BuildUmbDir)\bin" />
+
 		<Copy SourceFiles="@(PackageFile)" DestinationFolder="$(BuildUmbDir)" />
-		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BuildNuGetDir)\lib\net45" />
-		<Copy SourceFiles="@(PdbFiles)" DestinationFolder="$(BuildNuGetDir)\lib\net45" />
 		<Copy SourceFiles="@(NuSpecFile)" DestinationFolder="$(BuildNuGetDir)" />
 		<Copy SourceFiles="@(GruntProjectFiles)" DestinationFiles="@(GruntProjectFiles->'$(BuildUmbDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
 		<Copy SourceFiles="@(GruntProjectFiles)" DestinationFiles="@(GruntProjectFiles->'$(BuildNuGetDir)\Content\%(RecursiveDir)%(Filename)%(Extension)')" />    

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Pure.Umbraco</id>
+    <version>0.1.0-alpha-000100</version>
+    <title>Pure</title>
+    <authors>Nathan Woulfe</authors>
+    <owners>Nathan Woulfe</owners>
+    <projectUrl>https://github.com/nathanwoulfe/Pure</projectUrl>
+    <iconUrl>http://icon.com/img.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Distraction-free editing in Umbraco 8.</description>
+    <summary>Distraction-free editing in Umbraco 8.</summary>
+    <copyright>Nathan Woulfe</copyright>
+    <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
+    <language>en-GB</language>
+    <tags>Umbraco UmbracoCMS</tags>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="8.0.2" />
+    </dependencies>
+  </metadata>
+</package>
