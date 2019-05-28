@@ -1,8 +1,0 @@
-﻿{
-  "javascript": [
-    "~/App_Plugins/pure/backoffice/pure.js",
-  ],
-  "css": [
-    "~/App_Plugins/pure/backoffice/css/styles.css"
-  ] 
-}

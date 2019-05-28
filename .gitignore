@@ -12,11 +12,14 @@
 **/App_Data/cache/*
 **/App_Data/preview/*
 *umbraco.config
-Preflight.Site.v8/App_Plugins/Preflight/**
-Preflight/pkg
-Preflight/dist
-Preflight/tmp
+Pure.Site/App_Plugins/Pure/**
+Pure/pkg
+Pure/dist
+Pure/tmp
 dist
+BuildPackage/_nuget
+BuildPackage/_umbraco
+BuildPackage/_artifacts
 
 # Build results
 
@@ -203,7 +206,7 @@ $RECYCLE.BIN/
 
 BuildPackage/artifacts/*
 
-Preflight.Site.v8/umbraco
-Preflight.Site.v8/umbraco_client
-Preflight.Site.v8/Media/
-/Preflight.Site.V8/App_Data/NuGetBackup/20190302-092659
+Pure.Site/umbraco
+Pure.Site/umbraco_client
+Pure.Site/Media/
+/Pure.Site/App_Data/NuGetBackup
