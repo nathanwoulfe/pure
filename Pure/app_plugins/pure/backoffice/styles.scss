@@ -32,7 +32,7 @@ $e: ease-in-out;
 }
 
 .pure {
-    &-anchors {
+    &-anchors { 
         position: absolute;
         z-index: 6666;
         top: 20px;
@@ -50,7 +50,6 @@ $e: ease-in-out;
         font-size: 16px;
         color: #343434;
         opacity: 0.5;
-        @include transition(opacity);
 
         &:hover, &.active {
             opacity: 1;
@@ -116,7 +115,8 @@ $e: ease-in-out;
             left: 0;
         }
 
-        &,
+        &, 
+        .umb-editor-container, 
         .umb-editor-wrapper {
             background: #fff;
         }
@@ -124,20 +124,12 @@ $e: ease-in-out;
         .umb-group-panel {
             box-shadow: none;
             background: #fff;
-
-            .umb-control-group {
-                margin-left: 180px;
-                margin-right: 180px;
-            }
         }
 
+        .umb-control-group,
         .umb-group-panel__header {
             margin-left: 180px;
             margin-right: 180px;
-        }
-
-        .umb-editor-container {
-            background: #fff;
         }
 
         .umb-editor-container,

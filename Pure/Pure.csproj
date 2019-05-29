@@ -44,7 +44,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app_plugins\pure\backoffice\css\styles.scss" />
+    <None Include="app_plugins\pure\backoffice\styles.scss" />
     <None Include="app_plugins\pure\package.manifest" />
     <None Include="package.json" />
   </ItemGroup>

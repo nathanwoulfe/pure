@@ -1,101 +1,115 @@
 ﻿(function () {
 
-    function hook($timeout) {
+    function controller($timeout) {
 
-        const directive = {
-            restrict: 'E',
-            link: () => {
+        let active = false;
+        let animating = false;
 
-                let active = false;
-                let animating = false;
-                const appContent = document.querySelector('.umb-app-content');
+        let panels;
+        let container;
 
-                const buildNav = () => {
+        const duration = 1000;
+        const offset = 10;
+        const appContent = document.querySelector('.umb-app-content');
 
-                    let list = document.createElement('ul');
-                    list.className = 'pure-anchors unstyled';
-                    const panels = document.querySelectorAll('[data-app-anchor]');
+        /*
+         * 
+         */
+        const clearNav = () => appContent.removeChild(document.querySelector('.pure-anchors'));
 
-                    for (let p of panels) {
-                        let item = document.createElement('li');
+        /*
+         * 
+         */
+        const toggle = className => document.body.classList.toggle(className);
 
-                        item.className = 'pure-anchor';
-                        item.setAttribute('data-pure-target', p.dataset.appAnchor);
-                        item.innerText = p.querySelector('.umb-group-panel__header').innerText;
+        /*
+         *
+         */
+        const buildNav = () => {
 
-                        item.addEventListener('click', e => {
+            let list = document.createElement('ul');
+            list.className = 'pure-anchors unstyled';
 
-                            const anchors = document.querySelectorAll('.pure-anchor');
-                            for (let a of anchors) {
-                                a.classList.remove('active');
-                            }
+            for (let p of panels) {
+                let item = document.createElement('li');
 
-                            e.target.classList.add('active');
+                item.className = 'pure-anchor';
+                item.setAttribute('data-pure-target', p.dataset.appAnchor);
+                item.innerText = p.querySelector('.umb-group-panel__header').innerText;
 
-                            const target = document.querySelector(`[data-app-anchor="${e.target.dataset.pureTarget}"]`);
+                item.addEventListener('click', e => {
+                    if (!e.target.classList.contains('active')) {
+                        const target = document.getElementById(e.target.dataset.pureTarget);
 
-                            document.querySelector('[data-element="editor-container"]').scrollTo({
-                                top: target.getBoundingClientRect().top - document.body.getBoundingClientRect().top - 20,
-                                behavior: 'smooth'
-                            });
+                        document.querySelector('.pure-anchor.active').classList.remove('active');
+                        e.target.classList.add('active');
+
+                        container.scrollTo({
+                            top: target.offsetTop - 20,
+                            behavior: 'smooth'
                         });
-
-                        list.appendChild(item);
-                    }
-
-                    list.firstElementChild.classList.add('active');
-
-                    appContent.insertBefore(list, appContent.firstElementChild);
-                };
-
-                const clearNav = () => {
-                    appContent.removeChild(document.querySelector('.pure-anchors'));
-                };
-
-                window.addEventListener('keydown', function (e) {
-                    if (e.altKey && e.keyCode === 78 && !animating) {
-                        animating = true;
-
-                        if (!active) {
-
-                            document.body.classList.toggle('pure-mode');
-                            buildNav();
-
-                            $timeout(() => {
-                                document.body.classList.toggle('pure-mode--1');
-                            }, 10);
-
-                            $timeout(() => {
-                                document.body.classList.toggle('pure-mode--2');
-                            }, 1010);
-
-                        } else {
-                            document.body.classList.toggle('pure-mode--2');
-
-                            $timeout(() => {
-                                document.body.classList.toggle('pure-mode--1');
-                            }, 1000);
-
-                            $timeout(() => {
-                                document.body.classList.toggle('pure-mode');
-                                clearNav();
-
-                            }, 2010);
-                        }
-
-                        $timeout(() => { 
-                            animating = false;
-                        }, 1010);
-
-                        active = !active;
                     }
                 });
+
+                list.appendChild(item);
             }
+
+            list.firstElementChild.classList.add('active');
+
+            appContent.insertBefore(list, appContent.firstElementChild);
         };
 
-        return directive;
+        /*
+         * 
+         */
+        window.addEventListener('keydown', function (e) {
+            if (e.altKey && e.keyCode === 78 && !animating) {
+                animating = true;
+
+                panels = document.querySelectorAll('[data-app-anchor]');
+                panels.forEach(p => p.setAttribute('id', p.dataset.appAnchor));
+
+                container = document.querySelector('[data-element="editor-container"]');
+
+                if (!active) {
+                    toggle('pure-mode');
+                    buildNav();
+
+                    $timeout(() => {
+                        toggle('pure-mode--1');
+                    }, offset);
+
+                    $timeout(() => {
+                        toggle('pure-mode--2');
+                    }, duration + offset);
+                } else {
+                    toggle('pure-mode--2');
+
+                    $timeout(() => {
+                        toggle('pure-mode--1');
+                    }, duration);
+
+                    $timeout(() => {
+                        toggle('pure-mode');
+                        clearNav();
+                    }, duration * 2 + offset);
+                }
+
+                $timeout(() => {
+                    animating = false;
+                }, duration + offset);
+
+                active = !active;
+            }
+        });
     }
 
-    angular.module('umbraco.directives').directive('section', ['$timeout', hook]);
+    const component = {
+        controller: controller
+    };
+
+    controller.$inject = ['$timeout'];
+
+    angular.module('umbraco').component('section', component);
 
 }());

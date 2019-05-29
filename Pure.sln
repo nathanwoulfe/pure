@@ -7,12 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pure.Site", "Pure.Site\Pure
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B35A5EFE-E8C8-468C-ADA6-3F2BF4694E63}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		BuildPackage\Build.bat = BuildPackage\Build.bat
 		BuildPackage\LocalBuild.bat = BuildPackage\LocalBuild.bat
 		BuildPackage\package.nuspec = BuildPackage\package.nuspec
 		BuildPackage\package.proj = BuildPackage\package.proj
 		BuildPackage\Package.xml = BuildPackage\Package.xml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pure", "Pure\Pure.csproj", "{ADE29EB4-782E-4F62-81D5-8D7C6236AA5A}"

@@ -41,20 +41,6 @@
             ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;\n' +
             ' * Licensed <%= pkg.license %>\n *',
 
-        //Concat all the JS files into one
-        concat: {
-            dist: {
-                src: [
-                    '<%= backoffice %>/*.js',
-                ],
-                dest: '<%= backoffice %>/pure.es6',
-                nonull: true,
-                options: {
-                    banner: '/<%= banner %>/\n\n'
-                }
-            }
-        },
-
         //Compile the less file into a CSS file
         sass: {
             options: {
@@ -63,7 +49,7 @@
             },
             dist: {
                 files: {
-                    '<%= backoffice %>/css/styles.css': '<%= backoffice %>/css/styles.scss'
+                    '<%= backoffice %>/styles.css': '<%= backoffice %>/styles.scss'
                 }
             }
         },
@@ -72,15 +58,15 @@
             target: {
                 files: [{
                     expand: true,
-                    cwd: '<%= backoffice %>/css',
+                    cwd: '<%= backoffice %>',
                     src: 'styles.css',
-                    dest: '<%= dest %>/<%= backoffice %>/css',
+                    dest: '<%= dest %>/<%= backoffice %>',
                     ext: '.min.css'
                 }]
             },
             add_banner: {
                 files: { 
-                    '<%= dest %>/<%= backoffice %>/css/styles.min.css': ['<%= dest %>/<%= backoffice %>/css/styles.min.css']
+                    '<%= dest %>/<%= backoffice %>/styles.min.css': ['<%= dest %>/<%= backoffice %>/styles.min.css']
                 }
             }
         },
@@ -89,10 +75,9 @@
             dist: {
                 files: {
                     // destination for transpiled js : source js
-                    '<%= dest %>/<%= backoffice %>/js/pure.js': '<%= backoffice %>/pure.es6'
+                    '<%= dest %>/<%= backoffice %>/pure.js': '<%= backoffice %>/pure.js'
                 },
                 options: {
-                    transform: [['babelify', { presets: 'env' }]],
                     browserifyOptions: {
                         debug: false
                     }
@@ -101,7 +86,6 @@
         },
         
         watch: {
-
             // dev watches everything, copies everything
             dev: {
                 files: ['<%= backoffice %>/**/*'],
@@ -109,31 +93,6 @@
                 options: {
                     livereload: true
                 }
-            },
-
-            css: {
-                files: ['<%= backoffice %>/**/*.scss'],
-                tasks: ['sass:dist']
-            },
-
-            js: {
-                files: ['<%= backoffice %>/**/*.js'],
-                tasks: ['copy:js']
-            },
-
-            html: {
-                files: ['<%= backoffice %>/**/*.html'],
-                tasks: ['copy:html']
-            },
-
-            config: {
-                files: ['<%= basePath %>/package.manifest'],
-                tasks: ['copy:config']
-            },
-
-            lang: {
-                files: ['<%= basePath %>/lang/**'],
-                tasks: ['copy:lang']
             }
         },
 
@@ -146,54 +105,14 @@
             },
 
             manifest: {
-                src: '<%= basePath %>/dist.manifest', // dist.manifest only references the compiled, prod-ready css/js
+                src: '<%= basePath %>/package.manifest', // dist.manifest only references the compiled, prod-ready css/js
                 dest: '<%= dest %>/<%= basePath %>/package.manifest',
             },
 
             manifestDev: {
                 src: '<%= basePath %>/package.manifest',
                 dest: '../pure.site/<%= basePath %>/package.manifest',
-            },
-
-            css: {
-                src: '<%= backoffice %>/css/styles.css',
-                dest: '<%= dest %>/<%= backoffice %>/css/styles.min.css', // yes, it's not minified, but the build task will overwrite it later
-            },
-
-            js: {
-                expand: true,
-                cwd: '<%= backoffice %>/',
-                src: '**/*.js',
-                dest: '<%= dest %>/<%= backoffice %>/',
-            },
-
-            html: {
-                expand: true,
-                cwd: '<%= backoffice %>/',
-                src: '**/*.html',
-                dest: '<%= dest %>/<%= backoffice %>/',
-            },
-
-            json: {
-                expand: true,
-                cwd: '<%= backoffice %>/',
-                src: '**/*.json',
-                dest: '<%= dest %>/<%= backoffice %>/',
-            },
-
-            lang: {
-                expand: true,
-                cwd: '<%= basePath %>/lang/',
-                src: '**',
-                dest: '<%= dest %>/<%= basePath %>/lang',
-            },
-
-            langDev: {
-                expand: true,
-                cwd: '<%= basePath %>/lang/',
-                src: '**',
-                dest: '../pure.site/lang/',
-            },
+            },       
 
             nuget: {
                 expand: true,
@@ -305,9 +224,9 @@
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'concat', 'browserify', 'sass', 'cssmin', 'copy:json', 'copy:manifest', 'copy:html', 'copy:lang']);
+    grunt.registerTask('default', ['jshint', 'browserify', 'sass', 'cssmin', 'copy:manifest']);
     grunt.registerTask('nuget', ['clean', 'default', 'copy:nuget', 'template:nuspec', 'mkdir:pkg', 'nugetpack']);
     grunt.registerTask('package', ['clean', 'default', 'copy:umbraco', 'copy:umbracoBin', 'mkdir:pkg', 'umbracoPackage']);
     
-    grunt.registerTask('dev', ['copy:langDev', 'copy:dev', 'copy:manifestDev', 'watch:dev']);
+    grunt.registerTask('dev', ['copy:dev', 'copy:manifestDev', 'watch:dev']);
 };

@@ -14,8 +14,7 @@
   font-weight: 700;
   font-size: 16px;
   color: #343434;
-  opacity: 0.5;
-  transition: opacity 1s ease-in-out; }
+  opacity: 0.5; }
   .pure-anchor:hover, .pure-anchor.active {
     opacity: 1; }
 
@@ -64,22 +63,18 @@
   left: 0; }
 
 .pure-mode--1,
+.pure-mode--1 .umb-editor-container,
 .pure-mode--1 .umb-editor-wrapper {
   background: #fff; }
 
 .pure-mode--1 .umb-group-panel {
   box-shadow: none;
   background: #fff; }
-  .pure-mode--1 .umb-group-panel .umb-control-group {
-    margin-left: 180px;
-    margin-right: 180px; }
 
+.pure-mode--1 .umb-control-group,
 .pure-mode--1 .umb-group-panel__header {
   margin-left: 180px;
   margin-right: 180px; }
-
-.pure-mode--1 .umb-editor-container {
-  background: #fff; }
 
 .pure-mode--1 .umb-editor-container,
 .pure-mode--1 .umb-app-content {
