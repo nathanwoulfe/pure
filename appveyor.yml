@@ -5,7 +5,7 @@ image: Visual Studio 2017
 
 cache:
   - packages -> **\packages.config
-  - c:\projects\nathanwoulfe\pure\node_modules -> **\packages.json
+  - c:\projects\pure\pure\node_modules -> **\packages.json
   
 install:
   - set PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\MSBuild.exe;C:\Ruby25\bin;%PATH%

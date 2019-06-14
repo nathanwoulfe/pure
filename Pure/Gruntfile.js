@@ -89,7 +89,7 @@
             // dev watches everything, copies everything
             dev: {
                 files: ['<%= backoffice %>/**/*'],
-                tasks: ['sass:dist', 'copy:dev'],
+                tasks: 'copy:dev',
                 options: {
                     livereload: true
                 }

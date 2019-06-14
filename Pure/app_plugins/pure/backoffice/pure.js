@@ -22,6 +22,23 @@
          */
         const toggle = className => document.body.classList.toggle(className);
 
+        const changeNav = entries => {
+            console.log(entries);
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+                    console.log(entry);
+                    document.querySelector('.pure-anchor.active').classList.remove('active');
+                    const id = entry.target.dataset.appAnchor;
+                    document.querySelector(`[data-pure-target="${id}"]`).classList.add('active');
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(changeNav, {
+            threshold: 0.55,
+            root: appContent
+        });
+
         /*
          *
          */
@@ -60,34 +77,30 @@
         };
 
         /*
-         * 
+         * Toggle pure mode on ALT+N
          */
-        window.addEventListener('keydown', function (e) {
+        window.addEventListener('keydown', e => {
             if (e.altKey && e.keyCode === 78 && !animating) {
                 animating = true;
 
                 panels = document.querySelectorAll('[data-app-anchor]');
-                panels.forEach(p => p.setAttribute('id', p.dataset.appAnchor));
-
+                panels.forEach(p => {
+                    p.setAttribute('id', p.dataset.appAnchor);
+                    observer.observe(p);
+                });
+                
                 container = document.querySelector('[data-element="editor-container"]');
 
                 if (!active) {
                     toggle('pure-mode');
                     buildNav();
 
-                    $timeout(() => {
-                        toggle('pure-mode--1');
-                    }, offset);
-
-                    $timeout(() => {
-                        toggle('pure-mode--2');
-                    }, duration + offset);
+                    $timeout(() => toggle('pure-mode--1'), offset);
+                    $timeout(() => toggle('pure-mode--2'), duration + offset);
                 } else {
                     toggle('pure-mode--2');
 
-                    $timeout(() => {
-                        toggle('pure-mode--1');
-                    }, duration);
+                    $timeout(() => toggle('pure-mode--1'), duration);
 
                     $timeout(() => {
                         toggle('pure-mode');
@@ -95,9 +108,7 @@
                     }, duration * 2 + offset);
                 }
 
-                $timeout(() => {
-                    animating = false;
-                }, duration + offset);
+                $timeout(() => animating = false, duration + offset);
 
                 active = !active;
             }

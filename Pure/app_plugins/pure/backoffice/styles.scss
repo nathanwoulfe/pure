@@ -1,5 +1,6 @@
 ﻿$d: 1s;
 $e: ease-in-out;
+$w: 180px;
 
 @mixin transition($transitions...) {
     $unfoldedTransitions: ();
@@ -32,12 +33,12 @@ $e: ease-in-out;
 }
 
 .pure {
-    &-anchors { 
+    &-anchors {
         position: absolute;
         z-index: 6666;
         top: 20px;
         left: 0;
-        width: 180px;
+        width: $w;
         opacity: 0;
         transform: translateY(-100%);
         @include transition(opacity, transform);
@@ -115,8 +116,8 @@ $e: ease-in-out;
             left: 0;
         }
 
-        &, 
-        .umb-editor-container, 
+        &,
+        .umb-editor-container,
         .umb-editor-wrapper {
             background: #fff;
         }
@@ -128,8 +129,16 @@ $e: ease-in-out;
 
         .umb-control-group,
         .umb-group-panel__header {
-            margin-left: 180px;
-            margin-right: 180px;
+            margin-left: $w;
+            margin-right: $w;
+
+            @media (min-width:768px) {
+                margin-right: 0;
+            }
+
+            @media (min-width:1200px) {
+                margin-right: $w;
+            }
         }
 
         .umb-editor-container,
