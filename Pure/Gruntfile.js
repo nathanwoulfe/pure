@@ -49,7 +49,7 @@
             },
             dist: {
                 files: {
-                    '<%= backoffice %>/styles.css': '<%= backoffice %>/styles.scss'
+                    '<%= backoffice %>/styles.css': ['<%= backoffice %>/styles.scss']
                 }
             }
         },
@@ -89,7 +89,7 @@
             // dev watches everything, copies everything
             dev: {
                 files: ['<%= backoffice %>/**/*'],
-                tasks: 'copy:dev',
+                tasks: ['sass:dist', 'copy:dev'],
                 options: {
                     livereload: true
                 }
@@ -224,7 +224,7 @@
         }
     });
 
-    grunt.registerTask('default', ['jshint', 'browserify', 'sass', 'cssmin', 'copy:manifest']);
+    grunt.registerTask('default', ['jshint', 'browserify', 'sass', 'cssmin:dist', 'copy:manifest']);
     grunt.registerTask('nuget', ['clean', 'default', 'copy:nuget', 'template:nuspec', 'mkdir:pkg', 'nugetpack']);
     grunt.registerTask('package', ['clean', 'default', 'copy:umbraco', 'copy:umbracoBin', 'mkdir:pkg', 'umbracoPackage']);
     

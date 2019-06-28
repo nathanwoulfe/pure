@@ -1,7 +1,6 @@
 ﻿(function () {
 
     function controller($timeout) {
-
         let active = false;
         let animating = false;
 
@@ -23,10 +22,8 @@
         const toggle = className => document.body.classList.toggle(className);
 
         const changeNav = entries => {
-            console.log(entries);
             entries.forEach(entry => {
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
-                    console.log(entry);
                     document.querySelector('.pure-anchor.active').classList.remove('active');
                     const id = entry.target.dataset.appAnchor;
                     document.querySelector(`[data-pure-target="${id}"]`).classList.add('active');
@@ -102,10 +99,10 @@
 
                     $timeout(() => toggle('pure-mode--1'), duration);
 
-                    $timeout(() => {
+                    $timeout(() => { 
                         toggle('pure-mode');
-                        clearNav();
-                    }, duration * 2 + offset);
+                        clearNav(); 
+                    }, duration * 2 + offset); 
                 }
 
                 $timeout(() => animating = false, duration + offset);

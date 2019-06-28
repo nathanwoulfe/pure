@@ -34,14 +34,19 @@ $w: 180px;
 
 .pure {
     &-anchors {
-        position: absolute;
-        z-index: 6666;
-        top: 20px;
-        left: 0;
-        width: $w;
-        opacity: 0;
-        transform: translateY(-100%);
-        @include transition(opacity, transform);
+        display: none;
+
+        @media (min-width:1024px) {
+            display: block;
+            position: absolute;
+            z-index: 6666;
+            top: 20px;
+            left: 0;
+            width: $w;
+            opacity: 0;
+            transform: translateY(-100%);
+            @include transition(opacity, transform);
+        }
     }
 
     &-anchor {
@@ -75,7 +80,7 @@ $w: 180px;
         .umb-group-panel__header,
         .umb-editor-footer,
         .umb-control-group {
-            @include transition(padding, margin);
+            @include transition(padding, margin, opacity);
         }
 
         &,
@@ -129,11 +134,11 @@ $w: 180px;
 
         .umb-control-group,
         .umb-group-panel__header {
-            margin-left: $w;
-            margin-right: $w;
+            margin-left: 0;
+            margin-right: 0;
 
-            @media (min-width:768px) {
-                margin-right: 0;
+            @media (min-width:1024px) {
+                margin-left: $w;
             }
 
             @media (min-width:1200px) {
@@ -147,8 +152,16 @@ $w: 180px;
         }
 
         .umb-editor-footer {
-            padding-left: 200px;
-            padding-right: 217px;
+            opacity:0.1;
+
+            &:hover {
+                opacity:1;
+            }
+
+            @media(min-width:1200px) {
+                padding-left: 200px;
+                padding-right: 217px;
+            }
         }
     }
 
