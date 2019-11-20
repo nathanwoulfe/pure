@@ -1,4 +1,4 @@
-﻿$d: 1s;
+﻿$d: 0.8s;
 $e: ease-in-out;
 $w: 180px;
 
@@ -152,10 +152,10 @@ $w: 180px;
         }
 
         .umb-editor-footer {
-            opacity:0.1;
+            opacity: 0.1;
 
             &:hover {
-                opacity:1;
+                opacity: 1;
             }
 
             @media(min-width:1200px) {
@@ -169,6 +169,10 @@ $w: 180px;
         .pure-anchors {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .umb-editor-footer:hover {
+            transition-duration: $d / 2;
         }
     }
 }

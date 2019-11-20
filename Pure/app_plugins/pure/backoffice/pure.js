@@ -1,39 +1,71 @@
-﻿(function () {
+﻿(() => {
+
+    angular.module('pure.components', []);
+
+    angular.module('pure', [
+        'pure.components'
+    ]);
+
+    angular.module('umbraco').requires.push('pure');
+
+})(); 
+
+(() => {
 
     function controller($timeout) {
         let active = false;
         let animating = false;
 
         let panels;
+        let previousPanel;
         let container;
 
-        const duration = 1000;
+        const duration = 800;
         const offset = 10;
+        const threshold = 1;
+
+        const activeClass = 'active';
         const appContent = document.querySelector('.umb-app-content');
 
-        /*
-         * 
-         */
         const clearNav = () => appContent.removeChild(document.querySelector('.pure-anchors'));
-
-        /*
-         * 
-         */
-        const toggle = className => document.body.classList.toggle(className);
+        const deselectNav = () => document.querySelector('.pure-anchor.active').classList.remove(activeClass);
+        const step = level => document.body.classList.toggle('pure-mode' + (level ? '--' + level : ''));
 
         const changeNav = entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
-                    document.querySelector('.pure-anchor.active').classList.remove('active');
-                    const id = entry.target.dataset.appAnchor;
-                    document.querySelector(`[data-pure-target="${id}"]`).classList.add('active');
+            for (let entry of entries) {
+
+                const anchor = entry.target.dataset.appAnchor;
+                const elm = document.querySelector(`[data-pure-target="${anchor}"]`);
+
+                if (!elm)
+                    continue;
+
+                if (entry.isIntersecting && entry.intersectionRatio >= threshold) {
+                    elm.classList.add('is-visible');
+                    previousPanel = anchor;
+                } else {
+                    elm.classList.remove('is-visible');
                 }
-            });
+
+                highlightActive();
+            }
+        };
+
+        const highlightActive = () => {
+            const firstVisible = document.querySelector('.is-visible');
+            deselectNav();
+
+            if (firstVisible) {
+                firstVisible.classList.add(activeClass);
+            }
+
+            if (!firstVisible && previousPanel) {
+                document.querySelector(`[data-pure-target="${previousPanel}"]`).classList.add(activeClass);
+            }
         };
 
         const observer = new IntersectionObserver(changeNav, {
-            threshold: 0.55,
-            root: appContent
+            threshold: threshold
         });
 
         /*
@@ -52,11 +84,11 @@
                 item.innerText = p.querySelector('.umb-group-panel__header').innerText;
 
                 item.addEventListener('click', e => {
-                    if (!e.target.classList.contains('active')) {
+                    if (!e.target.classList.contains(activeClass)) {
                         const target = document.getElementById(e.target.dataset.pureTarget);
 
-                        document.querySelector('.pure-anchor.active').classList.remove('active');
-                        e.target.classList.add('active');
+                        deselectNav();
+                        e.target.classList.add(activeClass);
 
                         container.scrollTo({
                             top: target.offsetTop - 20,
@@ -68,39 +100,45 @@
                 list.appendChild(item);
             }
 
-            list.firstElementChild.classList.add('active');
+            list.firstElementChild.classList.add(activeClass);
 
             appContent.insertBefore(list, appContent.firstElementChild);
         };
 
         /*
-         * Toggle pure mode on ALT+N
+         * Toggle pure mode on SHIFT+P
          */
-        window.addEventListener('keydown', e => {
-            if (e.altKey && e.keyCode === 78 && !animating) {
-                animating = true;
+        document.addEventListener('keydown', e => {
 
+            if (e.shiftKey && e.keyCode === 80 && !animating) {
+
+                const scope = angular.element(document.querySelector('form[name="contentForm"]')).scope();
+                if (scope.app.alias !== 'umbContent')
+                    return;
+
+                animating = true;
                 panels = document.querySelectorAll('[data-app-anchor]');
-                panels.forEach(p => {
+
+                for (let p of panels) {
                     p.setAttribute('id', p.dataset.appAnchor);
                     observer.observe(p);
-                });
+                }
                 
                 container = document.querySelector('[data-element="editor-container"]');
 
                 if (!active) {
-                    toggle('pure-mode');
+                    step(0);
                     buildNav();
 
-                    $timeout(() => toggle('pure-mode--1'), offset);
-                    $timeout(() => toggle('pure-mode--2'), duration + offset);
+                    $timeout(() => step(1), offset);
+                    $timeout(() => step(2), duration + offset);
                 } else {
-                    toggle('pure-mode--2');
+                    step(2);
 
-                    $timeout(() => toggle('pure-mode--1'), duration);
+                    $timeout(() => step(1), duration);
 
                     $timeout(() => { 
-                        toggle('pure-mode');
+                        step(0);
                         clearNav(); 
                     }, duration * 2 + offset); 
                 }
@@ -109,7 +147,7 @@
 
                 active = !active;
             }
-        });
+        }); 
     }
 
     const component = {
@@ -118,6 +156,5 @@
 
     controller.$inject = ['$timeout'];
 
-    angular.module('umbraco').component('section', component);
-
-}());
+    angular.module('pure.components').component('section', component);
+})();

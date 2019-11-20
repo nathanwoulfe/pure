@@ -10,7 +10,7 @@
       width: 180px;
       opacity: 0;
       transform: translateY(-100%);
-      transition: opacity 1s ease-in-out, transform 1s ease-in-out; } }
+      transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out; } }
 
 .pure-anchor {
   cursor: pointer;
@@ -25,28 +25,28 @@
 .pure-mode .umb-app-header,
 .pure-mode #navigation,
 .pure-mode .umb-editor-header {
-  transition: transform 1s ease-in-out, opacity 1s ease-in-out; }
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out; }
 
 .pure-mode #contentwrapper {
-  transition: left 1s ease-in-out; }
+  transition: left 0.8s ease-in-out; }
 
 .pure-mode .umb-app-content {
-  transition: top 1s ease-in-out; }
+  transition: top 0.8s ease-in-out; }
 
 .pure-mode .umb-group-panel__header,
 .pure-mode .umb-editor-footer,
 .pure-mode .umb-control-group {
-  transition: padding 1s ease-in-out, margin 1s ease-in-out, opacity 1s ease-in-out; }
+  transition: padding 0.8s ease-in-out, margin 0.8s ease-in-out, opacity 0.8s ease-in-out; }
 
 .pure-mode,
 .pure-mode .umb-editor-wrapper {
-  transition: background 1s ease-in-out; }
+  transition: background 0.8s ease-in-out; }
 
 .pure-mode .umb-editor-container {
-  transition: top 1s ease-in-out, background 1s ease-in-out; }
+  transition: top 0.8s ease-in-out, background 0.8s ease-in-out; }
 
 .pure-mode .umb-group-panel {
-  transition: background 1s ease-in-out, box-shadow 1s ease-in-out; }
+  transition: background 0.8s ease-in-out, box-shadow 0.8s ease-in-out; }
 
 .pure-mode .umb-editor-sub-header.-umb-sticky-bar {
   top: 0; }
@@ -104,3 +104,6 @@
 .pure-mode--2 .pure-anchors {
   opacity: 1;
   transform: translateY(0); }
+
+.pure-mode--2 .umb-editor-footer:hover {
+  transition-duration: 0.4s; }
