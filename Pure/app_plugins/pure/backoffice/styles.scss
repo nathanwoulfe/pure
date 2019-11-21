@@ -93,7 +93,11 @@ $w: 180px;
         }
 
         .umb-group-panel {
-            @include transition(background, box-shadow);
+            @include transition(background, box-shadow, padding);
+
+            &:last-child {
+                padding-bottom: 100px;
+            }
         }
 
         .umb-editor-sub-header.-umb-sticky-bar {

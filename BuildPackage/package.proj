@@ -15,8 +15,8 @@
 	<!-- SHARED PROPERTIES -->
 	<PropertyGroup>
 		<PackageName>Pure</PackageName>
-		<MinUmbracoVersion>8.0.2</MinUmbracoVersion>
-		<Readme>Distraction-free editing in Umbraco 8.</Readme>
+		<MinUmbracoVersion>8.0.0</MinUmbracoVersion>
+		<Readme>Distraction-free editing in Umbraco 8</Readme>
 		<AuthorName>Nathan Woulfe</AuthorName>
 		<AuthorUrl>https://github.com/nathanwoulfe</AuthorUrl>
 		<PackageLicenseName>MIT license</PackageLicenseName>

@@ -46,7 +46,9 @@
   transition: top 0.8s ease-in-out, background 0.8s ease-in-out; }
 
 .pure-mode .umb-group-panel {
-  transition: background 0.8s ease-in-out, box-shadow 0.8s ease-in-out; }
+  transition: background 0.8s ease-in-out, box-shadow 0.8s ease-in-out, padding 0.8s ease-in-out; }
+  .pure-mode .umb-group-panel:last-child {
+    padding-bottom: 100px; }
 
 .pure-mode .umb-editor-sub-header.-umb-sticky-bar {
   top: 0; }
