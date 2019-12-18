@@ -12,7 +12,7 @@
 
 (() => {
 
-    function controller($timeout) {
+    function controller($timeout, editorState) {
         let active = false;
         let animating = false;
 
@@ -145,11 +145,10 @@
 
         /** */
         document.addEventListener('keydown', e => {
-
             if (e.shiftKey && e.keyCode === 80 && !animating) {
 
-                const scope = angular.element(document.querySelector('form[name="contentForm"]')).scope();
-                if (scope.app.alias !== 'umbContent')
+                const activeVariant = editorState.current.variants.find(x => x.active);
+                if (!activeVariant || activeVariant.apps.find(x => x.active).alias !== 'umbContent')
                     return;
 
                 animating = true;
@@ -162,11 +161,7 @@
                 
                 container = document.querySelector('[data-element="editor-container"]');
 
-                if (!active) {
-                    open();
-                } else {
-                    close();
-                }
+                !active ? open() : close();                
 
                 $timeout(() => animating = false, duration + offset);
 
@@ -189,7 +184,7 @@
         controller: controller
     };
 
-    controller.$inject = ['$timeout'];
+    controller.$inject = ['$timeout', 'editorState'];
 
     angular.module('pure.components').component('section', component);
 })();
