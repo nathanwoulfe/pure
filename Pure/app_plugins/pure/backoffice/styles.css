@@ -103,6 +103,18 @@
       padding-left: 200px;
       padding-right: 217px; } }
 
+.pure-mode--1 .umb-editor--infiniteMode .umb-group-panel__header,
+.pure-mode--1 .umb-editor--infiniteMode .umb-control-group {
+  margin-left: 0;
+  margin-right: 0; }
+  .pure-mode--1 .umb-editor--infiniteMode .umb-group-panel__header::after,
+  .pure-mode--1 .umb-editor--infiniteMode .umb-control-group::after {
+    color: #fff; }
+
+.pure-mode--1 .umb-editor--infiniteMode .umb-editor-footer {
+  opacity: 1;
+  padding: 10px 20px; }
+
 .pure-mode--2 .pure-anchors {
   opacity: 1;
   transform: translateY(0); }

@@ -167,6 +167,23 @@ $w: 180px;
                 padding-right: 217px;
             }
         }
+
+        .umb-editor--infiniteMode {
+            .umb-group-panel__header,
+            .umb-control-group {
+                margin-left: 0;
+                margin-right:0;
+
+                &::after {
+                    color: #fff;
+                }
+            }
+
+            .umb-editor-footer {
+                opacity:1;
+                padding:10px 20px;
+            }
+        }
     }
 
     &-mode--2 {
