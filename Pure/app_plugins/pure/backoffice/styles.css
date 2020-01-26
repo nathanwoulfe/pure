@@ -1,3 +1,15 @@
+.pure-button {
+  width: 30px;
+  height: 30px;
+  margin-top: 1px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 0;
+  font-size: 20px;
+  line-height: 30px; }
+  .pure-button:hover {
+    text-decoration: none; }
+
 .pure-anchors {
   display: none; }
   @media (min-width: 1024px) {

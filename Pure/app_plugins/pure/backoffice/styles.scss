@@ -33,6 +33,21 @@ $w: 180px;
 }
 
 .pure {
+    &-button {
+        width:30px;
+        height:30px;
+        margin-top:1px;
+        border-radius:50%;
+        text-align:center;
+        padding:0;
+        font-size:20px;
+        line-height:30px;
+
+        &:hover {
+            text-decoration:none;
+        }
+    }
+
     &-anchors {
         display: none;
 
